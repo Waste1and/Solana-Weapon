@@ -34,19 +34,3 @@
    git clone https://github.com/Waste1and/Solana-Weapon.git
    cd Solana-Weapon
 
-### Make sure to configure 
-
-DISCORD_TOKEN=your-discord-bot-token
-
-PRIVATE_KEY=your-private-key
-
-API_URL=https://api.mainnet-beta.solana.com
-
-### Install Dependencies 
-
-pip3 install -r requirements.txt
-
-### Run the Bot
-
-python3 discord_bot.py
-
