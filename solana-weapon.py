@@ -1,7 +1,6 @@
 # solana-weapon.py
 import asyncio
 from solana.publickey import PublicKey
-from solana.rpc.api import Client
 from config import SOLANA_PRIVATE_KEY
 from utils import fetch_pump_fun_data, analyze_pump_fun_data, fetch_dexscreener_data, analyze_market_data, generate_signals, execute_signals, handle_user_query
 
