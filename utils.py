@@ -2,6 +2,7 @@
 
 import requests
 from bs4 import BeautifulSoup
+from solana.rpc.async_api import AsyncClient
 
 def fetch_pump_fun_data():
     url = "https://pump.fun/board"
@@ -76,4 +77,3 @@ def generate_signals(analyzed_data, signals_from_pump_fun):
             signals[symbol]['action'] = action
         else:
             signals[symbol] = {'action': action, 'confidence': 0.7}
-    return signals
