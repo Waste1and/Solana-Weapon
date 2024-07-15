@@ -37,7 +37,9 @@
 ### Make sure to configure 
 
 DISCORD_TOKEN=your-discord-bot-token
+
 PRIVATE_KEY=your-private-key
+
 API_URL=https://api.mainnet-beta.solana.com
 
 ### Install Dependencies 
