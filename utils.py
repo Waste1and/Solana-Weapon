@@ -1,10 +1,8 @@
-# utils.py
-
 import requests
 from bs4 import BeautifulSoup
 from solana.rpc.async_api import AsyncClient
 from solana.transaction import Transaction
-from solana.account import Account
+from solana.keypair import Keypair  # Updated import for Keypair generation
 from gpt4free import providers, ChatGPT
 
 API_URL = "https://api.mainnet-beta.solana.com"
