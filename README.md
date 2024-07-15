@@ -23,11 +23,11 @@
    git clone https://github.com/Waste1and/Solana-Weapon.git
    cd Solana-Weapon
 
-Automated Installation Script:
+### Automated Installation Script:
 
-Create a file named install_and_run.sh with the following content:#!/bin/bash
+Create a file named install_and_run.sh with the following content:
 
-# Update and install required packages
+#!/bin/bash
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     sudo apt update
     sudo apt install -y git python3 python3-pip
@@ -59,14 +59,14 @@ pip3 install -r requirements.txt
 # Run the bot
 python3 discord_bot.py
 
-***Make the script executable and run it with your credentials as arguments***
+### Make the script executable and run it with your credentials as arguments***
 
 chmod +x install_and_run.sh
 ./install_and_run.sh your-discord-bot-token your-private-key
 
 Or
 
-Linux Installation Commands: 
+### Linux Installation: 
 
 sudo apt update
 sudo apt install -y git python3 python3-pip
@@ -74,22 +74,22 @@ sudo apt install -y git python3 python3-pip
 git clone https://github.com/Waste1and/Solana-Weapon.git
 cd Solana-Weapon
 
-***Create a .env File: Create a .env file in the root directory with your credentials***
+### Create a .env File: Create a .env file in the root directory with your credentials
 
 DISCORD_TOKEN=your-discord-bot-token
 PRIVATE_KEY=your-private-key
 API_URL=https://api.mainnet-beta.solana.com
 
-***Configure discord-bot-token and your-private-key with your credentials***
+### Configure discord-bot-token and your-private-key with your credentials
 
 pip3 install -r requirements.txt
 
-***RUN THE BOT***
+### RUN THE BOT
 
 python3 discord_bot.py
 
 
-USAGE: 
+### USAGE: 
 
 Ask the Bot:
 
@@ -97,7 +97,7 @@ In your Discord server, type !ask <your question> to ask the bot a question.
 
 Example: !ask what's trending?
 
-Execute Trades: 
+### Execute Trades: 
 
 Type !trade to fetch the latest data, generate signals, and execute trades.
 
