@@ -1,3 +1,5 @@
 requests
 beautifulsoup4
 solana
+gpt4free
+gpt4free[completions]
