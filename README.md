@@ -9,7 +9,7 @@
 - **Signal Generation**: Provides trading signals based on market conditions.
 - **Trading Execution**: Places buy and sell orders on Solana-based platforms.
 
-## Getting Started
+## Getting Started 1.0
 
 ### Prerequisites
 
