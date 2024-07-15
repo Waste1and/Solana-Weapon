@@ -1,17 +1,24 @@
-# discord_bot.py
-
 import os
 import discord
 import asyncio
 from discord.ext import commands
-from config import PRIVATE_KEY, API_URL
+from dotenv import load_dotenv
+from solana.keypair import Keypair
+from solana.publickey import PublicKey
+from solana.rpc.async_api import AsyncClient
+from solana.transaction import Transaction
+from solana.system_program import transfer, TransferParams
 from utils import (
-    fetch_pump_fun_data, analyze_pump_fun_data, fetch_dexscreener_data, 
+    fetch_pump_fun_data, analyze_pump_fun_data, fetch_dexscreener_data,
     analyze_market_data, generate_signals, execute_signals, handle_user_query
 )
 
-# Load Discord token from environment variable
-DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
+# Load environment variables
+load_dotenv()
+
+DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
+PRIVATE_KEY = os.getenv("PRIVATE_KEY")
+API_URL = os.getenv("API_URL")
 
 # Set up Discord bot
 intents = discord.Intents.default()
