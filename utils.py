@@ -84,7 +84,7 @@ def generate_signals(analyzed_data, signals_from_pump_fun):
         elif action == 'SELL':
             signals[symbol] = {'action': 'SELL', 'confidence': 0.9}
         else:
-            signals[symbol] = {'action': 'HOLD', 'confidence': 0.5'}
+            signals[symbol] = {'action': 'HOLD', 'confidence': 0.5}
     
     for symbol, action in signals_from_pump_fun.items():
         if symbol in signals:
