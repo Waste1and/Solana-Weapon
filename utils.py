@@ -5,10 +5,10 @@ from bs4 import BeautifulSoup
 from solana.rpc.async_api import AsyncClient
 from solana.transaction import Transaction
 from solana.account import Account
+from gpt4free import providers, ChatGPT
 
 API_URL = "https://api.mainnet-beta.solana.com"
 
-# Function to fetch data from Pump.Fun
 def fetch_pump_fun_data():
     url = "https://pump.fun/board"
     response = requests.get(url)
@@ -31,7 +31,6 @@ def fetch_pump_fun_data():
         })
     return tokens
 
-# Function to analyze data from Pump.Fun
 def analyze_pump_fun_data(tokens):
     signals = {}
     for token in tokens:
@@ -46,7 +45,6 @@ def analyze_pump_fun_data(tokens):
             signals[token['symbol']] = 'HOLD'
     return signals
 
-# Function to fetch market data from DexScreener
 def fetch_dexscreener_data():
     url = "https://api.dexscreener.com/latest/dex/tokens/solana"
     response = requests.get(url)
@@ -64,7 +62,6 @@ def fetch_dexscreener_data():
         })
     return formatted_tokens
 
-# Function to analyze market data from DexScreener
 def analyze_market_data(tokens):
     signals = {}
     for token in tokens:
@@ -79,7 +76,6 @@ def analyze_market_data(tokens):
             signals[token['symbol']] = 'HOLD'
     return signals
 
-# Function to generate trading signals by combining analyzed data
 def generate_signals(analyzed_data, signals_from_pump_fun):
     signals = {}
     for symbol, action in analyzed_data.items():
@@ -97,7 +93,6 @@ def generate_signals(analyzed_data, signals_from_pump_fun):
             signals[symbol] = {'action': action, 'confidence': 0.7}
     return signals
 
-# Function to execute trading signals
 async def execute_signals(signals, private_key):
     async with AsyncClient(API_URL) as client:
         for symbol, signal in signals.items():
@@ -111,3 +106,26 @@ async def execute_signals(signals, private_key):
                 pass
             else:
                 print(f"Holding {symbol}")
+
+def generate_text_response(prompt):
+    response = ChatGPT.Completion.create(
+        providers.Bard,  # or any other free provider supported by gpt4free
+        prompt=prompt,
+        max_tokens=150
+    )
+    return response['text'].strip()
+
+def handle_user_query(query):
+    if "trending" in query.lower():
+        tokens = fetch_dexscreener_data()
+        trending_tokens = sorted(tokens, key=lambda x: float(x['volume'].replace(',', '')), reverse=True)[:5]
+        response = f"The top trending tokens are: {[token['name'] for token in trending_tokens]}"
+    elif "entry point" in query.lower():
+        tokens = fetch_dexscreener_data()
+        signals = analyze_market_data(tokens)
+        buy_signals = [symbol for symbol, signal in signals.items() if signal == 'BUY']
+        response = f"Suggested entry points: {buy_signals}"
+    else:
+        response = generate_text_response(query)
+    
+    return response
