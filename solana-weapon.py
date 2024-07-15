@@ -1,29 +1,25 @@
-# solana_weapon.py
-
+# solana-weapon.py
 import asyncio
-from config import PRIVATE_KEY, API_URL
-from utils import (
-    fetch_pump_fun_data, analyze_pump_fun_data, fetch_dexscreener_data, 
-    analyze_market_data, generate_signals, execute_signals, handle_user_query
-)
+from solana.publickey import PublicKey
+from solana.rpc.api import Client
+from config import SOLANA_PRIVATE_KEY
+from utils import fetch_pump_fun_data, analyze_pump_fun_data, fetch_dexscreener_data, analyze_market_data, generate_signals, execute_signals, handle_user_query
 
 async def main():
-    pump_fun_data = fetch_pump_fun_data()
-    signals_from_pump_fun = analyze_pump_fun_data(pump_fun_data)
+    # Fetch and analyze data from Pump.Fun
+    pump_fun_tokens = fetch_pump_fun_data()
+    pump_fun_signals = analyze_pump_fun_data(pump_fun_tokens)
     
-    dexscreener_data = fetch_dexscreener_data()
-    signals_from_dexscreener = analyze_market_data(dexscreener_data)
+    # Fetch and analyze market data
+    market_tokens = fetch_dexscreener_data()
+    market_signals = analyze_market_data(market_tokens)
     
-    signals = generate_signals(signals_from_dexscreener, signals_from_pump_fun)
-    await execute_signals(signals, PRIVATE_KEY)
+    # Generate final signals
+    final_signals = generate_signals(market_signals, pump_fun_signals)
+    print("Final Trading Signals:", final_signals)
+    
+    # Execute signals on the Solana network
+    await execute_signals(final_signals, SOLANA_PRIVATE_KEY)
 
 if __name__ == "__main__":
     asyncio.run(main())
-
-    # Example interaction
-    while True:
-        user_query = input("Ask the bot: ")
-        if user_query.lower() in ["exit", "quit"]:
-            break
-        response = handle_user_query(user_query)
-        print(response)
