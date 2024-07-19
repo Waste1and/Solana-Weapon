@@ -1,4 +1,3 @@
-# src/main.py
 import time
 from solana.rpc.api import Client
 from solana.transaction import Transaction
@@ -87,4 +86,41 @@ def main():
             historical_data = {
                 'Close': [float(x['close']) for x in pair['priceData']],
                 'High': [float(x['high']) for x in pair['priceData']],
-                'Low':
+                'Low': [float(x['low']) for x in pair['priceData']],
+                'Volume': [float(x['volume']) for x in pair['priceData']]
+            }
+            
+            signals = generate_signals(
+                historical_data['Close'],
+                historical_data['High'],
+                historical_data['Low'],
+                historical_data['Volume']
+            )
+            
+            print(f"Signals for {pair_name}:")
+            for key, value in signals.items():
+                print(f"{key}: {value}")
+            
+            # Example: Execute a buy trade
+            amount = 1000000  # Amount in lamports (1 SOL = 1,000,000 lamports)
+            take_profit_price = 2.0  # Example take-profit price (in SOL)
+            trailing_stop_loss_pct = 0.05  # 5% trailing stop-loss
+            
+            response = execute_buy_trade(
+                solana_private_key,
+                pair_address,
+                amount,
+                take_profit_price,
+                trailing_stop_loss_pct
+            )
+            print(f"Trade response: {response}")
+    else:
+        print("Error fetching pairs data:", pairs_data)
+
+if __name__ == "__main__":
+    while True:
+        try:
+            main()
+        except Exception as e:
+            print(f"Error in main loop: {e}")
+        time.sleep(600)  # Run every 10 minutes
